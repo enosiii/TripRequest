@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trip Request Form</title>
+    <link rel="icon" href="TR192.png" type="image/png">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#007bff">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --primary-hover: #3a56d4;
+            --secondary-color: #3f37c9;
+            --accent-color: #f72585;
+            --accent-hover: #e5177d;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --gray-color: #6c757d;
+            --border-color: #dee2e6;
+            --success-color: #4cc9f0;
+            --warning-color: #f8961e;
+            --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--dark-color);
+            background-color: #f5f7fa;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+        }
+        
+        h1 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            font-weight: 600;
+            font-size: 2rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            border-radius: 2px;
+        }
+        
+        h3 {
+            color: var(--secondary-color);
+            margin: 25px 0 15px;
+            font-weight: 500;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        h3::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 20px;
+            background: var(--primary-color);
+            margin-right: 10px;
+            border-radius: 3px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark-color);
+            font-size: 0.95rem;
+        }
+        
+        input[type="text"],
+        input[type="date"],
+        input[type="time"],
+        select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 15px;
+            transition: var(--transition);
+            background-color: white;
+            color: var(--dark-color);
+        }
+        
+        input[type="text"]:focus,
+        input[type="date"]:focus,
+        input[type="time"]:focus,
+        select:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        }
+        
+        input[type="text"]::placeholder,
+        input[type="date"]::placeholder,
+        input[type="time"]::placeholder {
+            color: var(--gray-color);
+            opacity: 0.7;
+        }
+        
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 -10px;
+        }
+        
+        .col {
+            flex: 1;
+            padding: 0 10px;
+            min-width: 200px;
+        }
+        
+        .passenger-row {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+            align-items: center;
+            background: rgba(67, 97, 238, 0.03);
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid rgba(67, 97, 238, 0.1);
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .passenger-row:hover {
+            border-color: rgba(67, 97, 238, 0.3);
+        }
+        
+        .passenger-col {
+            flex: 1;
+            padding: 0 10px;
+            min-width: 200px;
+        }
+        
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+            box-shadow: 0 2px 8px rgba(67, 97, 238, 0.3);
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(67, 97, 238, 0.4);
+        }
+        
+        .btn-secondary {
+            background-color: white;
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+        }
+        
+        .btn-secondary:hover {
+            background-color: rgba(67, 97, 238, 0.05);
+            transform: translateY(-1px);
+        }
+        
+        .btn-danger {
+            background-color: var(--accent-color);
+            color: white;
+            box-shadow: 0 2px 8px rgba(247, 37, 133, 0.3);
+        }
+        
+        .btn-danger:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(247, 37, 133, 0.4);
+        }
+        
+        .info-icon {
+            color: var(--primary-color);
+            cursor: pointer;
+            margin-left: 5px;
+            font-size: 0.9rem;
+        }
+        
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: var(--dark-color);
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 8px 10px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 13px;
+            font-weight: normal;
+            line-height: 1.4;
+        }
+        
+        .tooltip .tooltiptext::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: var(--dark-color) transparent transparent transparent;
+        }
+        
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        .passenger-counter {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background-color: var(--primary-color);
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        .form-section {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .form-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+
+
+
+        
+    .install-container {
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        #installPWA {
+            padding: 15px 30px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+            align-items: center;
+
+            /* UNCOMMENT FOR TESTING WHEN USING BLOCK , COMMENT WHEN USING INLINE-FLEX           
+            width: 300px;
+            margin-left: 50%;
+            transform: translateX(-150px); */
+        }
+        
+        #installPWA i {
+            margin-right: 10px;
+        }
+        
+        #installPWA:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(67, 97, 238, 0.4);
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+
+            /* UNCOMMENT FOR TESTING WHEN USING BLOCK , COMMENT WHEN USING INLINE-FLEX    
+            width: 300px;
+            margin-left: 50%;
+            transform: translateX(-150px); */
+        }
+        
+        #installPWA:active {
+            transform: translateY(0);
+        }
+
+        
+
+
+
+        @media (max-width: 500px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.6rem;
+            }
+            
+            .col, .passenger-col {
+                flex: 100%;
+                margin-bottom: 15px;
+            }
+            
+            .row, .passenger-row {
+                flex-direction: column;
+            }
+            
+            .radio-group {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .button-group {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            button {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+        
+        /* Animation for new passenger rows */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .passenger-row {
+            animation: fadeIn 0.3s ease-out forwards;
+        }
+        
+        /* Loading animation for export button */
+        .btn-loading {
+            position: relative;
+            pointer-events: none;
+        }
+        
+        .btn-loading::after {
+            content: "";
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+            border: 3px solid transparent;
+            border-top-color: white;
+            border-radius: 50%;
+            animation: button-loading-spinner 1s linear infinite;
+        }
+        
+        @keyframes button-loading-spinner {
+            from { transform: rotate(0turn); }
+            to { transform: rotate(1turn); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Trip Request Form</h1>
+        
+        <form id="tripRequestForm">
+            <div class="form-section">
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="dateRequested">Date Requested</label>
+                            <input type="date" id="dateRequested" required>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="requestorName">Name of Requestor</label>
+                            <input type="text" id="requestorName" placeholder="Enter requestor name" required>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="managerName">Name of Manager</label>
+                            <input type="text" id="managerName" placeholder="Enter manager name" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <h3>Trip Schedule</h3>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="tripDateFrom">Trip Date From</label>
+                            <input type="date" id="tripDateFrom" required>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="tripTimeFrom">Trip Time From</label>
+                            <input type="time" id="tripTimeFrom" required>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="tripDateTo">Trip Date To</label>
+                            <input type="date" id="tripDateTo" required>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="tripTimeTo">Trip Time To 
+                                <span class="tooltip">
+                                    <i class="fas fa-info-circle info-icon"></i>
+                                    <span class="tooltiptext">If left blank it will automatically filled with "onwards"</span>
+                                </span>
+                            </label>
+                            <input type="time" id="tripTimeTo">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="destination">Destination</label>
+                            <input type="text" id="destination" placeholder="Enter destination" required>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="purpose">Purpose of Trip</label>
+                            <input type="text" id="purpose" placeholder="Enter purpose of trip" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <h3>Passengers</h3>
+                <div id="passengersContainer">
+                    <!-- Passenger rows will be added here by JavaScript -->
+                </div>
+                
+                <div class="form-group">
+                    <button type="button" id="addPassenger" class="btn-secondary">
+                        <i class="fas fa-plus"></i> Add Passenger
+                    </button>
+                </div>
+            </div>
+            
+            <div class="button-group">
+                <button type="button" id="exportBtn" class="btn-primary">
+                    <i class="fas fa-file-export"></i> Export as Excel
+                </button>
+                <button type="button" id="clearBtn" class="btn-danger">
+                    <i class="fas fa-trash-alt"></i> Clear Fields
+                </button>
+            </div>
+
+        </form>
+        
+    
+
+    </div>
+    <div class="install-container">
+        <button id="installPWA" style="display: none;" >
+            <i class="fas fa-download"></i> Install App
+        </button>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.3.0/exceljs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set default dates
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('dateRequested').value = today;
+            document.getElementById('tripDateFrom').value = today;
+            document.getElementById('tripDateTo').value = today;
+            
+            // Load saved data from localStorage
+            loadFormData();
+            
+            // Initialize passengers (at least one)
+            addPassengerRow();
+            
+            // Event listeners
+            document.getElementById('addPassenger').addEventListener('click', addPassengerRow);
+            document.getElementById('exportBtn').addEventListener('click', exportAsExcel);
+            document.getElementById('clearBtn').addEventListener('click', clearForm);
+            
+            // Save form data when inputs change
+            const formInputs = document.querySelectorAll('#tripRequestForm input');
+            formInputs.forEach(input => {
+                input.addEventListener('change', saveFormData);
+            });
+        });
+        
+        let passengerCount = 0;
+        
+        function addPassengerRow() {
+            if (passengerCount >= 10) {
+                alert('Maximum of 10 passengers allowed');
+                return;
+            }
+            
+            passengerCount++;
+            const container = document.getElementById('passengersContainer');
+            
+            const row = document.createElement('div');
+            row.className = 'passenger-row';
+            row.id = `passengerRow${passengerCount}`;
+            
+            row.innerHTML = `
+                <div class="passenger-counter">${passengerCount}</div>
+                <div class="passenger-col">
+                    <div class="form-group">
+                        <label for="passengerName${passengerCount}">Passenger Name</label>
+                        <input type="text" id="passengerName${passengerCount}" placeholder="Enter passenger name">
+                    </div>
+                </div>
+                <div class="passenger-col">
+                    <div class="form-group">
+                        <label for="passengerContact${passengerCount}">Contact No.</label>
+                        <input type="text" id="passengerContact${passengerCount}" placeholder="Enter contact number">
+                    </div>
+                </div>
+                <div class="passenger-col" style="align-self: flex-end;">
+                    <button type="button" class="btn-secondary" onclick="removePassengerRow(${passengerCount})" ${passengerCount === 1 ? 'disabled' : ''}>
+                        <i class="fas fa-trash-alt"></i> Remove
+                    </button>
+                </div>
+            `;
+            
+            container.appendChild(row);
+            
+            // Add event listeners to save data
+            document.getElementById(`passengerName${passengerCount}`).addEventListener('change', saveFormData);
+            document.getElementById(`passengerContact${passengerCount}`).addEventListener('change', saveFormData);
+            
+            // Load saved data for this passenger if exists
+            loadPassengerData(passengerCount);
+        }
+        
+        function removePassengerRow(rowNum) {
+            if (passengerCount <= 1) return;
+            
+            const row = document.getElementById(`passengerRow${rowNum}`);
+            row.remove();
+            
+            // Renumber remaining passengers
+            passengerCount = 0;
+            const rows = document.querySelectorAll('.passenger-row');
+            rows.forEach((row, index) => {
+                passengerCount++;
+                const newRowNum = index + 1;
+                row.id = `passengerRow${newRowNum}`;
+                
+                // Update counter
+                const counter = row.querySelector('.passenger-counter');
+                if (counter) counter.textContent = newRowNum;
+                
+                // Update labels and IDs - FIXED SELECTORS
+                const nameGroup = row.querySelector('.passenger-col:first-child .form-group');
+                const contactGroup = row.querySelector('.passenger-col:nth-child(2) .form-group');
+                const nameInput = nameGroup.querySelector('input');
+                const contactInput = contactGroup.querySelector('input');
+                const removeBtn = row.querySelector('button');
+                
+                // Update IDs
+                nameInput.id = `passengerName${newRowNum}`;
+                contactInput.id = `passengerContact${newRowNum}`;
+                
+                // Enable/disable remove button based on count
+                removeBtn.disabled = newRowNum === 1;
+                removeBtn.setAttribute('onclick', `removePassengerRow(${newRowNum})`);
+            });
+            
+            saveFormData();
+        }
+        
+        function saveFormData() {
+            const formData = {
+                dateRequested: document.getElementById('dateRequested').value,
+                requestorName: document.getElementById('requestorName').value,
+                managerName: document.getElementById('managerName').value,
+                tripDateFrom: document.getElementById('tripDateFrom').value,
+                tripTimeFrom: document.getElementById('tripTimeFrom').value,
+                tripDateTo: document.getElementById('tripDateTo').value,
+                tripTimeTo: document.getElementById('tripTimeTo').value,
+                destination: document.getElementById('destination').value,
+                purpose: document.getElementById('purpose').value,
+                passengers: []
+            };
+            
+            // Save passenger data
+            for (let i = 1; i <= passengerCount; i++) {
+                const name = document.getElementById(`passengerName${i}`)?.value || '';
+                const contact = document.getElementById(`passengerContact${i}`)?.value || '';
+                
+                if (name || contact) {
+                    formData.passengers.push({
+                        name: name,
+                        contact: contact
+                    });
+                }
+            }
+            
+            localStorage.setItem('tripRequestFormData', JSON.stringify(formData));
+        }
+        
+        function loadFormData() {
+            const savedData = localStorage.getItem('tripRequestFormData');
+            if (!savedData) return;
+            
+            const formData = JSON.parse(savedData);
+            
+            // Set basic form values
+            document.getElementById('dateRequested').value = formData.dateRequested || '';
+            document.getElementById('requestorName').value = formData.requestorName || '';
+            document.getElementById('managerName').value = formData.managerName || '';
+            document.getElementById('tripDateFrom').value = formData.tripDateFrom || '';
+            document.getElementById('tripTimeFrom').value = formData.tripTimeFrom || '';
+            document.getElementById('tripDateTo').value = formData.tripDateTo || '';
+            document.getElementById('tripTimeTo').value = formData.tripTimeTo || '';
+            document.getElementById('destination').value = formData.destination || '';
+            document.getElementById('purpose').value = formData.purpose || '';
+            
+            // Load passengers
+            if (formData.passengers && formData.passengers.length > 0) {
+                // Clear existing passengers (except the first one)
+                const container = document.getElementById('passengersContainer');
+                container.innerHTML = '';
+                passengerCount = 0;
+                
+                // Add rows for each saved passenger
+                formData.passengers.forEach((passenger, index) => {
+                    addPassengerRow();
+                    document.getElementById(`passengerName${index + 1}`).value = passenger.name;
+                    document.getElementById(`passengerContact${index + 1}`).value = passenger.contact;
+                });
+            }
+        }
+        
+        function loadPassengerData(passengerNum) {
+            const savedData = localStorage.getItem('tripRequestFormData');
+            if (!savedData) return;
+            
+            const formData = JSON.parse(savedData);
+            if (!formData.passengers || formData.passengers.length < passengerNum) return;
+            
+            const passenger = formData.passengers[passengerNum - 1];
+            if (passenger) {
+                document.getElementById(`passengerName${passengerNum}`).value = passenger.name || '';
+                document.getElementById(`passengerContact${passengerNum}`).value = passenger.contact || '';
+            }
+        }
+        
+        function clearForm() {
+            if (confirm('Are you sure you want to clear all fields?')) {
+                localStorage.removeItem('tripRequestFormData');
+                document.getElementById('tripRequestForm').reset();
+                
+                // Reset dates to today
+                const today = new Date().toISOString().split('T')[0];
+                document.getElementById('dateRequested').value = today;
+                document.getElementById('tripDateFrom').value = today;
+                document.getElementById('tripDateTo').value = today;
+                
+                // Reset passengers to one empty row
+                const container = document.getElementById('passengersContainer');
+                container.innerHTML = '';
+                passengerCount = 0;
+                addPassengerRow();
+            }
+        }
+        
+        async function exportAsExcel() {
+            // Validate form
+            if (!validateForm()) {
+                return;
+            }
+            
+            // Show loading state on button
+            const exportBtn = document.getElementById('exportBtn');
+            exportBtn.classList.add('btn-loading');
+            exportBtn.disabled = true;
+            
+            try {
+                // Create workbook
+                const workbook = new ExcelJS.Workbook();
+                
+                // Load the template
+                const response = await fetch('Template1.xlsx');
+                const arrayBuffer = await response.arrayBuffer();
+                await workbook.xlsx.load(arrayBuffer);
+                
+                // Get the worksheet
+                const worksheet = workbook.getWorksheet('Trip Request');
+                
+                // Fill in the data (values only, preserving existing formatting)
+                const dateRequested = document.getElementById('dateRequested').value;
+                const requestorName = document.getElementById('requestorName').value;
+                const managerName = document.getElementById('managerName').value;
+                const tripDateFrom = document.getElementById('tripDateFrom').value;
+                const tripTimeFrom = document.getElementById('tripTimeFrom').value;
+                const tripDateTo = document.getElementById('tripDateTo').value;
+                let tripTimeTo = document.getElementById('tripTimeTo').value;
+                const destination = document.getElementById('destination').value;
+                const purpose = document.getElementById('purpose').value;
+                
+                // Format: Name of Requestor/Name of Manager
+                worksheet.getCell('B10').value = `${requestorName}/${managerName}`;
+                worksheet.getCell('M10').value = `${requestorName}/${managerName}`;
+                
+                // Date Requested (D7)
+                const dateReqCell = worksheet.getCell('D7');
+                dateReqCell.value = new Date(dateRequested);
+                // Preserve existing number format
+                if (!dateReqCell.numFmt) dateReqCell.numFmt = 'mm/dd/yyyy';
+                
+                // Date Requested (O7)
+                const dateReqCell2 = worksheet.getCell('O7');
+                dateReqCell2.value = new Date(dateRequested);
+                // Preserve existing number format
+                if (!dateReqCell2.numFmt) dateReqCell2.numFmt = 'mm/dd/yyyy';
+                
+                // Trip From (E12 and G12)
+                const dateFromCell = worksheet.getCell('E12');
+                dateFromCell.value = new Date(tripDateFrom);
+                if (!dateFromCell.numFmt) dateFromCell.numFmt = 'mm/dd/yyyy';
+                
+                worksheet.getCell('G12').value = tripTimeFrom;
+
+                // Trip From (P12 and R12)
+                const dateFromCell2 = worksheet.getCell('P12');
+                dateFromCell2.value = new Date(tripDateFrom);
+                if (!dateFromCell2.numFmt) dateFromCell2.numFmt = 'mm/dd/yyyy';
+                
+                worksheet.getCell('R12').value = tripTimeFrom;
+                
+                // Trip To (E13 and G13)
+                const dateToCell = worksheet.getCell('E13');
+                dateToCell.value = new Date(tripDateTo);
+                if (!dateToCell.numFmt) dateToCell.numFmt = 'mm/dd/yyyy';
+                
+                worksheet.getCell('G13').value = tripTimeTo || 'onwards';
+
+                // Trip To (P13 and R13)
+                const dateToCell2 = worksheet.getCell('P13');
+                dateToCell2.value = new Date(tripDateTo);
+                if (!dateToCell2.numFmt) dateToCell2.numFmt = 'mm/dd/yyyy';
+                
+                worksheet.getCell('G13').value = tripTimeTo || 'onwards';
+                worksheet.getCell('R13').value = tripTimeTo || 'onwards';
+
+                worksheet.getCell('D16').value = destination;
+                worksheet.getCell('O16').value = destination;
+                
+                // Purpose (E18)
+                worksheet.getCell('E18').value = purpose;
+                worksheet.getCell('P18').value = purpose;
+                
+                // Passengers (B22:E31)
+                for (let i = 1; i <= 10; i++) {
+                    const nameCell = `B${21 + i}`;
+                    const contactCell = `E${21 + i}`;
+                    
+                    if (i <= passengerCount) {
+                        const name = document.getElementById(`passengerName${i}`).value;
+                        const contact = document.getElementById(`passengerContact${i}`).value;
+                        
+                        worksheet.getCell(nameCell).value = name;
+                        worksheet.getCell(contactCell).value = contact;
+                    } else {
+                        worksheet.getCell(nameCell).value = '';
+                        worksheet.getCell(contactCell).value = '';
+                    }
+                }
+                
+                // Passengers (M22:P31)
+                for (let i = 1; i <= 10; i++) {
+                    const nameCell = `M${21 + i}`;
+                    const contactCell = `P${21 + i}`;
+                    
+                    if (i <= passengerCount) {
+                        const name = document.getElementById(`passengerName${i}`).value;
+                        const contact = document.getElementById(`passengerContact${i}`).value;
+                        
+                        worksheet.getCell(nameCell).value = name;
+                        worksheet.getCell(contactCell).value = contact;
+                    } else {
+                        worksheet.getCell(nameCell).value = '';
+                        worksheet.getCell(contactCell).value = '';
+                    }
+                }
+                
+                // Generate file name
+                const fileName = `Trip Request_${dateRequested}_${requestorName}.xlsx`;
+                
+                // Export the workbook
+                const buffer = await workbook.xlsx.writeBuffer();
+                saveAs(new Blob([buffer]), fileName);
+                
+                // Save form data after export
+                saveFormData();
+                
+            } catch (error) {
+                console.error('Error exporting Excel:', error);
+                alert('Error exporting Excel file. Please make sure the Template.xlsx exists.');
+            } finally {
+                // Restore button state
+                exportBtn.classList.remove('btn-loading');
+                exportBtn.disabled = false;
+            }
+        }
+        
+        function validateForm() {
+            const requiredFields = [
+                'dateRequested', 'requestorName', 'managerName', 
+                'tripDateFrom', 'tripTimeFrom', 'tripDateTo',
+                'destination', 'purpose'
+            ];
+            
+            for (const fieldId of requiredFields) {
+                const field = document.getElementById(fieldId);
+                if (!field.value.trim()) {
+                    alert(`Please fill in ${field.labels[0].textContent}`);
+                    field.focus();
+                    return false;
+                }
+            }
+            
+            // Check at least one passenger has a name
+            let hasPassenger = false;
+            for (let i = 1; i <= passengerCount; i++) {
+                if (document.getElementById(`passengerName${i}`).value.trim()) {
+                    hasPassenger = true;
+                    break;
+                }
+            }
+            
+            if (!hasPassenger) {
+                alert('Please add at least one passenger');
+                return false;
+            }
+            
+            return true;
+        }
+    </script>
+    
+    <script src="install.js"></script>
+    <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js', { scope: '/' })
+        .then((registration) => {
+          console.log('Service Worker registered with scope:', registration.scope);
+        })
+        .catch((error) => {
+          console.error('Service Worker registration failed:', error);
+        });
+    }
+  </script>
+
+</body>
+</html>

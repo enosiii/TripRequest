@@ -1,0 +1,23 @@
+{
+    "id": "/TripRequest/",
+    "short_name": "Test Request",
+    "name": "Test Request Form",
+    "description": "Test Request Form Generator",
+    "icons": [
+      {
+        "src": "TR192.png",
+        "type": "image/png",
+        "sizes": "192x192"
+      },
+      {
+        "src": "TR512.png",
+        "type": "image/png",
+        "sizes": "512x512"
+      }
+    ],
+    "start_url": "/TripRequest/index.html",
+    "background_color": "#f9f9f9",
+    "display": "standalone",
+    "scope": "/TripRequest/",
+    "theme_color": "#007bff"
+}
